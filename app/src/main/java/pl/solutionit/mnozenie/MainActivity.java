@@ -2,13 +2,9 @@ package pl.solutionit.mnozenie;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.View;
 import android.view.View.*;
 import android.view.Menu;
@@ -16,7 +12,10 @@ import android.view.MenuItem;
 
 import android.widget.*;
 
+import java.util.Date;
 import java.util.Random;
+import java.util.Calendar;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     Boolean flaga= true;
@@ -38,12 +37,14 @@ public class MainActivity extends AppCompatActivity {
     Button enter;
     TextView tekst;
     TextView pochwala;
+    TextView time;
     EditText wynik;
     String result;
     String podaj = "";
     Integer ij, x, pom1, pom2;
     ProgressBar progressBar;
-
+    long start;
+    long stop;
     int[] TEST = new int[2];
 
     @Override
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         spr = (Button) findViewById(R.id.enter);
         tekst = (TextView) findViewById(R.id.viewTekst);
         pochwala = (TextView) findViewById(R.id.textView2);
+        time = (TextView) findViewById(R.id.time);
         b1 = (Button) findViewById(R.id.b1);
         b2 = (Button) findViewById(R.id.b2);
         b3 = (Button) findViewById(R.id.b3);
@@ -110,6 +112,13 @@ public class MainActivity extends AppCompatActivity {
                 wynik.setText(podaj);
             }
         });
+        b3.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                podaj = podaj+3;
+                wynik.setText(podaj);
+            }
+        });
         b4.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,15 +164,26 @@ public class MainActivity extends AppCompatActivity {
         los.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 tekst.setText(losuj());
                 podaj="";
                 wynik.setText(podaj);
 
             }
         });
+      /*  time.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                time.setText(mTime());
+            }
+        });*/
         spr.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+             //   time.setText(mTime().);
+                double czas = (start-stop)/1000.0;
+
+                time.setText("");
                 watek.interrupt();
                flaga = false;
                 setButtonEnable(los, true);
@@ -184,9 +204,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     public String losuj() {
         String str = "";
-
+        start = System.currentTimeMillis();
         TEST = generuj(2, 10);
         ij = TEST[0] * TEST[1];
         if (ij>30){
@@ -204,13 +225,21 @@ public class MainActivity extends AppCompatActivity {
                 //flaga =true;
     /* */   } catch (IllegalThreadStateException e) {
     /* */       e.printStackTrace();
-    /* */       str = "xxxxx";
+    /* */      // str ="xxxxx";
             }
         //}
 
 
         return str;
     }
+    public double mTime(){
+
+        double czas = (start - stop)/1000;
+
+        return czas;
+
+    }
+
     public class Runne implements Runnable {
         // public class Watek extends Thread{
         //Thread watek = new Thread(new Runnable() {
@@ -219,11 +248,11 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             while (flaga) {
                 try {
-                    for (int i = 0; i <= 100; i++) {
+                   for (int i = 0; i <= 100; i++) {
                         progressBar.setProgress(i);
                         Thread.sleep(100);
                     }
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     //e.printStackTrace();
                     //  Thread.currentThread().interrupt();
                 }
