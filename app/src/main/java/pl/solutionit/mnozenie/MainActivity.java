@@ -177,13 +177,14 @@ public class MainActivity extends AppCompatActivity {
                 time.setText(mTime());
             }
         });*/
+
         spr.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
              //   time.setText(mTime().);
-                double czas = (start-stop)/1000.0;
-
-                time.setText("");
+                //double czas = (start-stop)/1000.0;
+                stop = System.currentTimeMillis();
+                time.setText(mTime());
                 watek.interrupt();
                flaga = false;
                 setButtonEnable(los, true);
@@ -207,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String losuj() {
         String str = "";
+        
         start = System.currentTimeMillis();
         TEST = generuj(2, 10);
         ij = TEST[0] * TEST[1];
@@ -232,11 +234,10 @@ public class MainActivity extends AppCompatActivity {
 
         return str;
     }
-    public double mTime(){
+    public String mTime(){
 
-        double czas = (start - stop)/1000;
-
-        return czas;
+        double czas = (stop - start);
+        return String.valueOf(czas);
 
     }
 
