@@ -12,39 +12,19 @@ import android.view.MenuItem;
 
 import android.widget.*;
 
-import java.util.Date;
 import java.util.Random;
-import java.util.Calendar;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     Boolean flaga= true;
     Runne mRun = new Runne();
     Thread  watek = new Thread(mRun);
-    Button los;
-    Button spr;
-    Button b1;
-    Button b2;
-    Button b3;
-    Button b4;
-    Button b5;
-    Button b6;
-    Button b7;
-    Button b8;
-    Button b9;
-    Button b_back;
-    Button b0;
-    Button enter;
-    TextView tekst;
-    TextView pochwala;
-    TextView time;
+    Button los, spr, b1, b2, b3, b4, b5, b6, b7, b8, b9, b0, backspace, enter;
+    TextView tekst, pochwala, time;
     EditText wynik;
-    String result;
-    String podaj = "";
+    String result, podaj = "";
     Integer ij, x, pom1, pom2;
     ProgressBar progressBar;
-    long start;
-    long stop;
+    long start, stop;
     int[] TEST = new int[2];
 
     @Override
@@ -66,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         b7 = (Button) findViewById(R.id.b7);
         b8 = (Button) findViewById(R.id.b8);
         b9 = (Button) findViewById(R.id.b9);
-        b_back = (Button) findViewById(R.id.b_back);
+        backspace = (Button) findViewById(R.id.b_back);
         b0 = (Button) findViewById(R.id.b0);
         enter = (Button) findViewById(R.id.enter);
         tekst.setText("Dzień dobry");
@@ -77,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        b_back.setOnClickListener(new OnClickListener() {
+        backspace.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 podaj="";
